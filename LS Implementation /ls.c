@@ -19,7 +19,6 @@
 
 #include "myDir.c"
 
-void stdOutput(char *path_name, struct options* myOpts);
 void fillUsrOpts(char *input, struct options* myOpts);
 void getPermissions(char *path);
 
@@ -28,7 +27,7 @@ int main (int argc, char *argv[]) {
         char *rel_path[1024];
         getcwd((char *)rel_path, 1024);
         printf("rel_Path: %s\n", (char *)rel_path);
-        stdOutput((char *)rel_path, &usr_opts);
+        optLOutPut((char *)rel_path, &usr_opts);
         exit(0);
     }
     
@@ -140,59 +139,5 @@ void fillUsrOpts(char *input, struct options* myOpts) {
             printf("Invalid option!\n");
             exit(0);
         }
-    }
-}
-
-void stdOutput(char *path_name, struct options* myOpts) {
-    DIR *dp = opendir(path_name);
-    if (dp == NULL) {
-        printf("Invalid Path! \n");
-        return ;
-    }
-   int  n = strlen(path_name);
-    struct dirent *dp_dirent = readdir(dp);
-    while (dp_dirent) {
-        bool dot_file = (strcmp(dp_dirent->d_name, ".") == 0  ||
-                         strcmp(dp_dirent->d_name, "..") == 0);
-       
-        if (dot_file || dp_dirent->d_name[0] == '.')
-        
-        {
-            if (myOpts->opt_a) {
-                printf("%s\n",dp_dirent->d_name);
-            }
-            else if (myOpts->opt_A && !dot_file) {
-                if (dp_dirent->d_name[0] == '.') {
-                    printf("%s\n",dp_dirent->d_name);
-                    
-                }
-            }
-            
-        }
-        else {
-            
-            struct stat buf;
-            int myStat = stat(path_name, &buf);
-            if (myStat < 0) {
-                printf("Stat error!: Path is: %s \n", path_name);
-            }
-          
-            
-            
-            if (myOpts->opt_i) {
-                char *new_path = path_name;
-                // new_path[n++]='/';
-                strcat(new_path, "/");
-                strcat(new_path, dp_dirent->d_name);
-                printf("%lld ", getInode(new_path));
-                new_path[n]=0;
-
-            }
-            printf("%s",dp_dirent->d_name);
-          
-                printf("\n");
-            
-        }
-        dp_dirent = readdir(dp);
     }
 }
