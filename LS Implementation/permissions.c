@@ -134,11 +134,11 @@ void getFileInfo(char *path, struct options* myOpts) {
             byte = 'G';
             size = size / (1024 * 1024 * 1024);
         }
-        printf("%-8d %-8d %-6.2f %-8c ", file.st_uid, file.st_gid, size, byte);
+        printf("%-8s %-8s %-6.2f %-8c ", getRealOwner(file.st_uid), getRealGroup(file.st_gid), size, byte);
         
     }
     else if (myOpts->opt_g) {
-        printf("%-8s %-8d %-8d ", getRealOwner(file.st_uid), file.st_gid, (int)file.st_size);
+        printf("%-8s %-8d ", getRealGroup(file.st_gid), (int)file.st_size);
 
     }
     else if (myOpts->opt_o) {

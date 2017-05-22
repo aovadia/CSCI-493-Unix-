@@ -15,8 +15,7 @@ char * getRealOwner(int uid) {
 char * getRealGroup(int gid) {
 
     struct group *Ptr;
-    gid_t GID;
-    GID=getgid();
+    
     Ptr = getgrgid((gid_t)gid);
     return Ptr->gr_name;
 

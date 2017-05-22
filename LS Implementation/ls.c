@@ -26,7 +26,6 @@ int main (int argc, char *argv[]) {
     if (argc == 1) { /*if no arguments */
         char *rel_path[1024];
         getcwd((char *)rel_path, 1024);
-        printf("rel_Path: %s\n", (char *)rel_path);
         optLOutPut((char *)rel_path, &usr_opts);
         exit(0);
     }
@@ -51,10 +50,8 @@ int main (int argc, char *argv[]) {
         exit(0);
     }
   
-    
     char *arg1 = argv[1];
     char *arg2 = argv[2];
-    
     
     if (!arg2) {
         char *rel_path[1024];
@@ -76,7 +73,6 @@ int main (int argc, char *argv[]) {
     else {
         fillUsrOpts(arg1, &usr_opts);
         usr_opts.FULL_PATH = arg2;
-     
     }
     
     
@@ -93,7 +89,6 @@ int main (int argc, char *argv[]) {
         printf("Entering path: %s\n", usr_opts.FULL_PATH);
         optLOutPut(usr_opts.FULL_PATH, &usr_opts);
     }
-    
 }
 
 void fillUsrOpts(char *input, struct options* myOpts) {
